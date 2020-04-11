@@ -1,0 +1,55 @@
+import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/models/popular.dart';
+import 'package:flutter/material.dart';
+
+class MangaCard extends StatelessWidget {
+  const MangaCard({
+    Key key,
+    @required this.manga,
+    this.height
+
+  }) : super(key: key);
+
+  final Popular manga;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      splashColor: colorYellow,
+      onTap: () {},
+      child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: Card(
+                    color: Colors.black,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.network(
+                        manga.img,
+                      ),
+                    )),
+              ),
+              Positioned(
+                  bottom: -1,
+                  left: -1,
+                  right: -1,
+                  child: Container(
+                    height: 50,
+                    color: colorLight.withOpacity(0.8),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        manga.name,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
+                  ))
+            ],
+          )),
+    );
+  }
+}
