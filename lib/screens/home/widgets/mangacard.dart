@@ -1,15 +1,23 @@
 import 'package:atheneum/constants/color.dart';
 import 'package:atheneum/models/popular.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/screens/manga/mangascreen.dart';
 
-class MangaCard extends StatelessWidget {
+class MangaCard extends StatefulWidget {
   const MangaCard({Key key, @required this.manga, this.height})
       : super(key: key);
 
   final Popular manga;
   final double height;
 
+  @override
+  _MangaCardState createState() => _MangaCardState();
+}
+
+class _MangaCardState extends State<MangaCard>   with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -19,9 +27,9 @@ class MangaCard extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => MangaScreen(
-                      url: manga.url,
+                      url: widget.manga.url,
                       img: Image.network(
-                        manga.img,
+                        widget.manga.img,
                       ),
                     )));
       },
@@ -34,8 +42,8 @@ class MangaCard extends StatelessWidget {
                     color: Colors.black,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(
-                        manga.img,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.manga.img,
                       ),
                     )),
               ),
@@ -49,7 +57,7 @@ class MangaCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        manga.name,
+                        widget.manga.name,
                         textAlign: TextAlign.center,
                         overflow: TextOverflow.fade,
                       ),
@@ -59,4 +67,6 @@ class MangaCard extends StatelessWidget {
           )),
     );
   }
+
+
 }

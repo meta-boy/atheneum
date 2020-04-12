@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
         primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      //  visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Splash(),
     );

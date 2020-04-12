@@ -1,5 +1,6 @@
 import 'package:atheneum/api/home.dart';
 import 'package:atheneum/constants/color.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/screens/manga/mangascreen.dart';
 import 'mangacard.dart';
@@ -40,7 +41,12 @@ class FirstPage extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (_) => MangaScreen(
                                       url: home.populars[index].url,
-                                      img: Image.network(home.populars[index].img),
+                                    //  img: Image.network(home.populars[index].img),
+                                  img : Image(
+                                    image: CachedNetworkImageProvider(
+                                      home.populars[index].img
+                                    ),
+                                  )
                                     )));
                       },
                       child: Padding(

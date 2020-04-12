@@ -22,33 +22,39 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingSearchBar(
-        controller: _textEditingController,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        trailing: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () async {
-              setState(() {
-                widgets = [
-                  Center(
-                    child: CircularProgressIndicator(),
-                  )
-                ];
-              });
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(top : 20.0),
+        child: FloatingSearchBar(
 
-              List<SearchResults> results =
-                  await search(_textEditingController.text);
-              setState(() {
-                widgets = results.map((e) {
-                  return SearchItem(result: e,);
-                }).toList();
-              });
-            }),
-        children: widgets);
+            controller: _textEditingController,
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            trailing: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () async {
+                  setState(() {
+                    widgets = [
+                      Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    ];
+                  });
+
+                  List<SearchResults> results =
+                      await search(_textEditingController.text);
+                  setState(() {
+                    widgets = results.map((e) {
+                      return SearchItem(result: e,);
+                    }).toList();
+                  });
+                }),
+            children: widgets),
+      ),
+    );
   }
 
   @override
