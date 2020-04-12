@@ -19,6 +19,8 @@ class NewMangaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  Image img = widget.img == null ? Image.network(manga.img,): widget.img;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorBlack,
@@ -83,7 +85,7 @@ class NewMangaScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      child: widget.img,
+                      child: img,
                       height: MediaQuery.of(context).size.height * 0.3,
                     )
                   ],
@@ -91,7 +93,7 @@ class NewMangaScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.45,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -101,7 +103,7 @@ class NewMangaScreen extends StatelessWidget {
                           style: TextStyle(color: colorLight, fontSize: 20),
                         ),
                         Text(
-                          manga.alternative + "\n",
+                          manga.alternative.toString() + "\n",
                           style: TextStyle(color: colorLight, fontSize: 10),
                         ),
                         Text(

@@ -1,5 +1,6 @@
 import 'package:atheneum/api/home.dart';
 import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/screens/search/search.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/first_page.dart';
@@ -33,7 +34,9 @@ class _HomeState extends State<Home> {
               backgroundColor: colorBlack,
               title: Text("Atheneum"),
               actions: <Widget>[
-                IconButton(icon: Icon(Icons.search), onPressed: () {}),
+                IconButton(icon: Icon(Icons.search), onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScreen()));
+                }),
                 IconButton(icon: Icon(Icons.settings), onPressed: () {}),
               ],
               bottom: TabBar(tabs: [

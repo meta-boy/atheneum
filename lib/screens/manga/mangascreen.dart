@@ -1,4 +1,3 @@
-
 import 'package:atheneum/screens/manga/widgets/old.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/models/manga.dart';
@@ -20,17 +19,18 @@ class _MangaScreenState extends State<MangaScreen> {
     getManga(widget.url).then((value) {
       setState(() {
         manga = Manga(value);
-        print(manga);
       });
     });
+    
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.url);
     return manga != null
-        ? manga.old ? OldMangaScreen(): NewMangaScreen(manga: manga, widget: widget)
+        ? manga.old
+            ? OldMangaScreen(manga: manga, widget: widget)
+            : NewMangaScreen(manga: manga, widget: widget)
         : Center(
             child: CircularProgressIndicator(),
           );

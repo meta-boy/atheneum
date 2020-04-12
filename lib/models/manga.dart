@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 Future<Document> getManga(String url) async {
   http.Response response = await http.get(url);
   Document document = parse(response.body);
-  print(url);
   return document;
 }
 
@@ -71,7 +70,11 @@ class Manga {
       List<Element> elements =
           document.querySelectorAll(".manga-info-text > li");
       this.name = elements[0].querySelector('h1').text;
-      this.alternative = elements[0].querySelector('h2').text;
+      try {
+        this.alternative = elements[0].querySelector('h2').text;
+      } catch (e) {
+        this.alternative = "None";
+      }
       var a = elements[1].querySelectorAll('a');
       a.forEach((element) {
         this
@@ -81,6 +84,7 @@ class Manga {
       this.status = elements[2].text;
       this.updated = elements[3].text;
       this.views = elements[5].text;
+      this.img = document.querySelector(".manga-info-pic > img").attributes['src'];
 
       var g = elements[6].querySelectorAll('a');
       g.forEach((element) {

@@ -17,17 +17,19 @@ class _ReaderState extends State<Reader> {
 
   Future<List<String>> getImages() async {
     dom.Document document = await getChapter();
-
     List<String> imageUrls = [];
 
     try {
-      var elements = document.querySelectorAll('.vung-doc > img');
+      var e = document.querySelector('.vung-doc');
+      var elements = e.querySelectorAll('img');
       elements.forEach((element) {
         imageUrls.add(element.attributes['src']);
       });
     } catch (e) {
-      var elements =
-          document.querySelectorAll('.container-chapter-reader > img');
+      
+      var e =
+          document.querySelector('.container-chapter-reader');
+      var elements = e.querySelectorAll('img');
       elements.forEach((element) {
         imageUrls.add(element.attributes['src']);
       });
@@ -56,8 +58,8 @@ class _ReaderState extends State<Reader> {
 
   @override
   Widget build(BuildContext context) {
-    print(imageUrls);
-
+    
+    print(widget.url);
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.chapter),
@@ -76,7 +78,6 @@ class _ReaderState extends State<Reader> {
                           children: <Widget>[
                             Positioned.fill(
                                 child: PhotoView(
-                                  initialScale: 0.5,
                               imageProvider: NetworkImage(imageUrls[index]),
                               backgroundDecoration:
                                   BoxDecoration(color: colorBlack),
@@ -92,7 +93,6 @@ class _ReaderState extends State<Reader> {
                                     ),
                                   ),
                                 )),
-                            
                           ],
                         ),
                       );

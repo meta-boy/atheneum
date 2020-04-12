@@ -1,5 +1,6 @@
 import 'package:atheneum/api/home.dart';
 import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/screens/manga/mangascreen.dart';
 import 'package:flutter/material.dart';
 
 import 'sliverdivider.dart';
@@ -36,10 +37,13 @@ class SecondPage extends StatelessWidget {
         SliverList(
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
+          
           return Column(
             children: <Widget>[
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => MangaScreen(url: home.mostPopular[index].url,)));
+                },
                 title: Text(
                   home.mostPopular[index].name,
                   style: TextStyle(color: colorLight),
