@@ -25,7 +25,7 @@ class ColorGenerator {
   Color getContrast(Color color) {
     if (color == null) color = Colors.transparent;
     final Color some =
-        color.computeLuminance() > 0.2 ? Colors.black : Colors.white;
+        color.computeLuminance() > 0.5 ? Colors.black : Colors.white;
     return some;
   }
 }
