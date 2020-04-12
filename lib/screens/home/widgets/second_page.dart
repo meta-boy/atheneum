@@ -36,7 +36,6 @@ class SecondPage extends StatelessWidget {
         SliverList(
             delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-          ColorGenerator cg = ColorGenerator();
           return Column(
             children: <Widget>[
               ListTile(
