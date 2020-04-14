@@ -11,7 +11,10 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home>  with AutomaticKeepAliveClientMixin<Home>{
+  @override
+  bool get wantKeepAlive => true;
+
   HomeData home;
   @override
   void initState() {
@@ -25,6 +28,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return DefaultTabController(
         length: 2,
         child: Scaffold(

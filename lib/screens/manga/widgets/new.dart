@@ -1,13 +1,17 @@
+import 'dart:math';
+
 import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/models/chapter.dart';
 import 'package:atheneum/models/manga.dart';
 import 'package:atheneum/screens/home/widgets/sliver_heading_text.dart';
 import 'package:atheneum/screens/home/widgets/sliverdivider.dart';
 import 'package:atheneum/screens/reader/reader.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../mangascreen.dart';
 
-class NewMangaScreen extends StatelessWidget {
+class NewMangaScreen extends StatefulWidget {
   const NewMangaScreen({
     Key key,
     @required this.manga,
@@ -18,12 +22,48 @@ class NewMangaScreen extends StatelessWidget {
   final MangaScreen widget;
 
   @override
+  _NewMangaScreenState createState() => _NewMangaScreenState();
+}
+
+class _NewMangaScreenState extends State<NewMangaScreen> {
+  List<Chapter> chapters;
+  double _angle;
+  bool reversed;
+  @override
+  void initState() {
+    chapters = widget.manga.chapters;
+    _angle = 0;
+    reversed = false;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-  Image img = widget.img == null ? Image.network(manga.img,): widget.img;
+    CachedNetworkImage img = widget.widget.img == null
+        ? CachedNetworkImage(
+            imageUrl: widget.manga.img,
+          )
+        : widget.widget.img;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorBlack,
+        title: Row(
+          children: <Widget>[
+            IconButton(
+                icon: Transform.rotate(
+                  angle: _angle,
+                  child: Icon(Icons.filter_list),
+                ),
+                onPressed: () {
+                  setState(() {
+                    chapters = chapters.reversed.toList();
+                    _angle = _angle == 0 ? pi : 0;
+                    reversed = !reversed;
+                  });
+                })
+          ],
+        ),
       ),
       endDrawer: SafeArea(
           child: Drawer(
@@ -39,7 +79,7 @@ class NewMangaScreen extends StatelessWidget {
                   )),
               Wrap(
                   alignment: WrapAlignment.center,
-                  children: manga.genres.map((e) {
+                  children: widget.manga.genres.map((e) {
                     ColorGenerator cg = ColorGenerator();
                     return InkWell(
                       onTap: () {},
@@ -67,7 +107,7 @@ class NewMangaScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  manga.description,
+                  widget.manga.description,
                   style: TextStyle(color: colorLight),
                   textAlign: TextAlign.start,
                 ),
@@ -98,23 +138,23 @@ class NewMangaScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          manga.name,
+                          widget.manga.name,
                           textAlign: TextAlign.left,
                           style: TextStyle(color: colorLight, fontSize: 20),
                         ),
                         Text(
-                          manga.alternative.toString() + "\n",
+                          widget.manga.alternative.toString() + "\n",
                           style: TextStyle(color: colorLight, fontSize: 10),
                         ),
                         Text(
-                          manga.status + "\n",
+                          widget.manga.status + "\n",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: colorLight,
                           ),
                         ),
                         Text(
-                          manga.updated,
+                          widget.manga.updated,
                           style: TextStyle(
                             color: colorLight,
                           ),
@@ -141,12 +181,23 @@ class NewMangaScreen extends StatelessWidget {
                     splashColor: colorBlue,
                     color: colorBlack,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => Reader(url: manga.chapters[index].url, chapter: manga.chapters[index].name,)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Reader(
+                                    url: chapters[index].url,
+                                    chapter: chapters[index].name,
+                                    chapterList: widget.manga.chapters,
+                                    index: reversed
+                                        ? widget.manga.chapters
+                                            .indexOf(chapters[index])
+                                        : index,
+                                  )));
                     },
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        manga.chapters[index].name,
+                        chapters[index].name,
                         style: TextStyle(
                           color: colorLight,
                         ),
@@ -160,7 +211,7 @@ class NewMangaScreen extends StatelessWidget {
                 )
               ],
             );
-          }, childCount: manga.chapters.length))
+          }, childCount: chapters.length))
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:atheneum/api/search.dart';
 import 'package:atheneum/constants/color.dart';
 import 'package:atheneum/screens/manga/mangascreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
@@ -29,7 +30,7 @@ class _SearchItemState extends State<SearchItem> {
             context,
             MaterialPageRoute(
                 builder: (_) => MangaScreen(
-                    img: Image.network(widget.result.image),
+                    img: CachedNetworkImage(imageUrl: widget.result.image),
                     url: widget.result.idEncode)));
       },
       child: Padding(
@@ -43,7 +44,7 @@ class _SearchItemState extends State<SearchItem> {
                 children: <Widget>[
                   Container(
                       height: MediaQuery.of(context).size.height * 0.2,
-                      child: Image.network(widget.result.image)),
+                      child: CachedNetworkImage(imageUrl: widget.result.image)),
                 ],
               ),
               Padding(

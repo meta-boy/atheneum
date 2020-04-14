@@ -1,8 +1,12 @@
+import 'dart:math';
+
 import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/models/chapter.dart';
 import 'package:atheneum/models/manga.dart';
 import 'package:atheneum/screens/home/widgets/sliver_heading_text.dart';
 import 'package:atheneum/screens/home/widgets/sliverdivider.dart';
 import 'package:atheneum/screens/reader/reader.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../mangascreen.dart';
@@ -20,19 +24,39 @@ class OldMangaScreen extends StatefulWidget {
 }
 
 class _OldMangaScreenState extends State<OldMangaScreen> {
-  Image img;
+  CachedNetworkImage img;
+  List<Chapter> chapters;
+  double _angle;
   @override
   void initState() {
-    // TODO: implement initState
-  img = widget.widget.img == null ? Image.network(widget.manga.img): widget.widget.img;
+    chapters = widget.manga.chapters;
+    _angle = 0;
+    img = widget.widget.img == null
+        ? CachedNetworkImage(imageUrl: widget.manga.img)
+        : widget.widget.img;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorBlack,
+        title: Row(
+          children: <Widget>[
+            IconButton(
+                icon: Transform.rotate(
+                  angle: _angle,
+                  child: Icon(Icons.filter_list),
+                ),
+                onPressed: () {
+                  setState(() {
+                    chapters = chapters.reversed.toList();
+                    _angle = _angle == 0 ? pi : 0;
+                  });
+                })
+          ],
+        ),
       ),
       endDrawer: SafeArea(
           child: Drawer(
@@ -112,18 +136,18 @@ class _OldMangaScreenState extends State<OldMangaScreen> {
                           style: TextStyle(color: colorLight, fontSize: 20),
                         ),
                         Text(
-                           widget.manga.alternative + "\n",
+                          widget.manga.alternative + "\n",
                           style: TextStyle(color: colorLight, fontSize: 10),
                         ),
                         Text(
-                           widget.manga.status + "\n",
+                          widget.manga.status + "\n",
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             color: colorLight,
                           ),
                         ),
                         Text(
-                           widget.manga.updated,
+                          widget.manga.updated,
                           style: TextStyle(
                             color: colorLight,
                           ),
@@ -150,12 +174,18 @@ class _OldMangaScreenState extends State<OldMangaScreen> {
                     splashColor: colorBlue,
                     color: colorBlack,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => Reader(url: widget.manga.chapters[index].url, chapter: widget.manga.chapters[index].name,)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => Reader(
+                                    url: chapters[index].url,
+                                    chapter: chapters[index].name,
+                                  )));
                     },
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        widget.manga.chapters[index].name,
+                        chapters[index].name,
                         style: TextStyle(
                           color: colorLight,
                         ),
@@ -169,9 +199,10 @@ class _OldMangaScreenState extends State<OldMangaScreen> {
                 )
               ],
             );
-          }, childCount: widget.manga.chapters.length))
+          }, childCount: chapters.length))
         ],
       ),
-    );;
+    );
+    ;
   }
 }

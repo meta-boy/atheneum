@@ -1,4 +1,5 @@
 import 'package:atheneum/screens/manga/widgets/old.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/models/manga.dart';
 
@@ -7,7 +8,7 @@ import 'widgets/new.dart';
 class MangaScreen extends StatefulWidget {
   MangaScreen({this.url, this.img});
   final String url;
-  final Image img;
+  final CachedNetworkImage img;
   @override
   _MangaScreenState createState() => _MangaScreenState();
 }
