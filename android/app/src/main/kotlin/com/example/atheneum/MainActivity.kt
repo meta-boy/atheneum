@@ -1,4 +1,4 @@
-package com.example.atheneum
+package info.metaboy.atheneum
 
 import io.flutter.embedding.android.FlutterActivity
 
