@@ -44,7 +44,7 @@ class _SplashState extends State<Splash> {
                 opacity: _opacity,
                 duration: Duration(seconds: 1),
                 curve: Curves.easeInOut,
-                child: Text("athenum", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),))
+                child: Text("atheneum", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),))
           ],
         )),
       ),

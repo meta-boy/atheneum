@@ -1,5 +1,7 @@
 import 'package:atheneum/api/home.dart';
 import 'package:atheneum/constants/color.dart';
+import 'package:atheneum/screens/genrepage/genrepage.dart';
+import 'package:atheneum/screens/manga/mangascreen.dart';
 import 'package:flutter/material.dart';
 
 import 'sliverdivider.dart';
@@ -23,7 +25,7 @@ class SecondPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Center(
                 child: Text(
-                  "Most Popular Manga:",
+                  "All Time Popular:",
                   style: TextStyle(
                       fontSize: 18,
                       color: colorLight,
@@ -34,12 +36,19 @@ class SecondPage extends StatelessWidget {
           ),
         ),
         SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
           return Column(
             children: <Widget>[
               ListTile(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => MangaScreen(
+                                url: home.mostPopular[index].url,
+                              )));
+                },
                 title: Text(
                   home.mostPopular[index].name,
                   style: TextStyle(color: colorLight),
@@ -79,17 +88,23 @@ class SecondPage extends StatelessWidget {
                   children: home.genre.map((e) {
                     ColorGenerator cg = ColorGenerator();
                     return InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => GenrePage(
+                                      genre: e,
+                                      currentPageNumber: 1,
+                                    )));
+                      },
                       splashColor: colorBlue,
                       child: Padding(
-                          padding:
-                              const EdgeInsets.only(right: 8),
+                          padding: const EdgeInsets.only(right: 8),
                           child: Chip(
                             backgroundColor: cg.random,
                             label: Text(
                               e.name,
-                              style:
-                                  TextStyle(color: cg.contrast),
+                              style: TextStyle(color: cg.contrast),
                             ),
                           )),
                     );

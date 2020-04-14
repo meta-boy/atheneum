@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:atheneum/constants/color.dart';
-import 'package:atheneum/screens/home/home.dart';
+import 'package:atheneum/screens/splash/license.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatefulWidget {
@@ -41,26 +41,27 @@ class _OnboardingState extends State<Onboarding> {
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Text(
-                        "By Pressing the button below you agree with the terms and conditions present in the license.",
+                        "By Pressing the button below you will be directed towards the disclaimer and then continue to agree with the terms and conditions present in the license.",
                         style: TextStyle(color: colorLight, fontSize: 8),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     Expanded(
                       child: FlatButton(
-                        splashColor: colorDark,
+                          splashColor: colorDark,
                           color: colorLight,
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Home()));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => LicenseApp()));
                           },
-                          onLongPress: (){
-
-                          },
+                          onLongPress: () {},
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Continue",
+                                "Disclaimer",
                                 style: TextStyle(fontSize: 18),
                               ),
                               Icon(Icons.arrow_forward)

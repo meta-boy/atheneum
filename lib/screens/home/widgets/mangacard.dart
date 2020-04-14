@@ -1,5 +1,6 @@
 import 'package:atheneum/constants/color.dart';
 import 'package:atheneum/models/popular.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/screens/manga/mangascreen.dart';
 
@@ -20,9 +21,7 @@ class MangaCard extends StatelessWidget {
             MaterialPageRoute(
                 builder: (_) => MangaScreen(
                       url: manga.url,
-                      img: Image.network(
-                        manga.img,
-                      ),
+                      img: CachedNetworkImage(imageUrl: manga.img),
                     )));
       },
       child: Padding(
@@ -34,9 +33,7 @@ class MangaCard extends StatelessWidget {
                     color: Colors.black,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Image.network(
-                        manga.img,
-                      ),
+                      child: CachedNetworkImage(imageUrl: manga.img,),
                     )),
               ),
               Positioned(

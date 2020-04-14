@@ -1,5 +1,6 @@
 import 'package:atheneum/api/home.dart';
 import 'package:atheneum/constants/color.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:atheneum/screens/manga/mangascreen.dart';
 import 'mangacard.dart';
@@ -19,7 +20,7 @@ class FirstPage extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         SliverHeadingText(
-          text: "Popular Manga: ",
+          text: "New Popular Manga: ",
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -40,13 +41,13 @@ class FirstPage extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (_) => MangaScreen(
                                       url: home.populars[index].url,
-                                      img: Image.network(home.populars[index].img),
+                                      img: CachedNetworkImage(imageUrl: home.populars[index].img),
                                     )));
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Card(
-                            child: Image.network(home.populars[index].img)),
+                            child: CachedNetworkImage(imageUrl: home.populars[index].img)),
                       ),
                     );
                   },
